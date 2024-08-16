@@ -1,23 +1,41 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import AppHome from '../views/AppHome.vue'
-import Login from '../views/Login.vue'
-import Dashboard from '../views/Dashboard.vue'
+import Login from '@/views/Login.vue'
+import Register from '@/views/Register.vue'
+import First from '@/views/First.vue'
+import Second from '@/views/Second.vue'
+import Third from '@/views/Third.vue'
 
 const routes = [
   {
     path: '/',
-    name: 'Home',
-    component: AppHome
+    redirect: '/login'
   },
   {
     path: '/login',
-    name: 'Login',
-    component: Login
+    component: Login,
+    meta: { hideNav: true }
   },
   {
-    path: '/dashboard',
-    name: 'Dashboard',
-    component: Dashboard,
+    path: '/register',
+    component: Register,
+    meta: { hideNav: true }
+  },
+  {
+    path: '/first',
+    name: 'First',
+    component: First
+    // meta: { requiresAuth: true } // 需要授權的頁面
+  },
+  {
+    path: '/second',
+    name: 'Second',
+    component: Second,
+    // meta: { requiresAuth: true } // 需要授權的頁面
+  },
+  {
+    path: '/third',
+    name: 'Third',
+    component: Third,
     // meta: { requiresAuth: true } // 需要授權的頁面
   }
 ]
