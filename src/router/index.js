@@ -23,20 +23,20 @@ const routes = [
   {
     path: '/first',
     name: 'First',
-    component: First
-    // meta: { requiresAuth: true } // 需要授權的頁面
+    component: First,
+    meta: { requiresAuth: true }
   },
   {
     path: '/second',
     name: 'Second',
     component: Second,
-    // meta: { requiresAuth: true } // 需要授權的頁面
+    meta: { requiresAuth: true }
   },
   {
     path: '/third',
     name: 'Third',
     component: Third,
-    // meta: { requiresAuth: true } // 需要授權的頁面
+    meta: { requiresAuth: true }
   }
 ]
 
@@ -45,14 +45,13 @@ const router = createRouter({
   routes
 })
 
-// 路由守衛
-// router.beforeEach((to, from, next) => {
-//   const isAuthenticated = localStorage.getItem('authToken') // 檢查用戶是否已登入
-//   if (to.matched.some(record => record.meta.requiresAuth) && !isAuthenticated) {
-//     next({ name: 'Login' }) // 如果未登入，重定向到登入頁
-//   } else {
-//     next() // 否則繼續導航
-//   }
-// })
+router.beforeEach((to, form, next) => {
+  const isAuthenticated = sessionStorage.getItem('token');
+  if (to.matched.some(record => record.meta.requiresAuth) && !isAuthenticated) {
+    next({ name: 'Login' });
+  } else {
+    next();
+  }
+});
 
 export default router
