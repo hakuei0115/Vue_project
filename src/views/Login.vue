@@ -53,7 +53,7 @@ const checkLogin = () => {
           timer: 1500
         })
         .then(() => {
-          router.push('/first');
+          router.push('/second');
         });
       } else {
         if (res.message === '用戶不存在') {
@@ -130,10 +130,7 @@ body {
 
 .submit {
   display: block;
-  padding-top: 0.75rem;
-  padding-bottom: 0.75rem;
-  padding-left: 1.25rem;
-  padding-right: 1.25rem;
+  padding: 0.75rem 1.25rem;
   background-color: #4F46E5;
   color: #ffffff;
   font-size: 0.875rem;

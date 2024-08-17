@@ -1,5 +1,4 @@
 <template>
-    <AppHeader />
     <table class="table table-dark table-striped">
         <thead>
             <tr>
