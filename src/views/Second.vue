@@ -3,12 +3,11 @@
         <input type="text" :value="token" readonly>
         <button type="button" @click="checkLogin">Check</button>
     </div>
-    <div class="todoList">
-        
-    </div>
+    <SecondTodolist />
 </template>
 
 <script setup>
+    import SecondTodolist from './SecondTodolist.vue';
     import Swal from 'sweetalert2';
 
     const token =  sessionStorage.getItem('token');
