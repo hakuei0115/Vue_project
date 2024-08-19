@@ -5,16 +5,10 @@
   <title>Redirecting...</title>
   <script>
     (function() {
-      var path = window.location.pathname;
-      var projectRoot = '/Vue_project/';
-
-      // 如果路徑不是從 /Vue_project 開始，則重定向到首頁
-      if (!path.startsWith(projectRoot)) {
+      const projectRoot = '/Vue_project/';
+      
+      if (window.location.pathname !== projectRoot) {
         window.location.replace(projectRoot);
-      } else {
-        // 在 Vue_project 中的路徑，重定向到對應的 Vue 路由
-        var newUrl = window.location.origin + projectRoot + path.slice(projectRoot.length) + window.location.search;
-        window.location.replace(newUrl);
       }
     })();
   </script>
