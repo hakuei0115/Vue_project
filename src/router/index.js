@@ -24,19 +24,19 @@ const routes = [
     path: '/first',
     name: 'First',
     component: First,
-    meta: { requiresAuth: true }
+    meta: { requiresAuth: true, title: 'Vue 直播班 | 第一週作業' }
   },
   {
     path: '/second',
     name: 'Second',
     component: Second,
-    meta: { requiresAuth: true }
+    meta: { requiresAuth: true, title: 'Vue 直播班 | 第二週作業' }
   },
   {
     path: '/third',
     name: 'Third',
     component: Third,
-    meta: { requiresAuth: true }
+    meta: { requiresAuth: true, title: 'Vue 直播班 | 第三週作業' }
   }
 ]
 
@@ -47,6 +47,11 @@ const router = createRouter({
 
 router.beforeEach((to, form, next) => {
   const isAuthenticated = sessionStorage.getItem('token');
+
+  if (to.meta.title) {
+    document.title = to.meta.title;
+  }
+
   if (to.matched.some(record => record.meta.requiresAuth) && !isAuthenticated) {
     next({ name: 'Login' });
   } else {
