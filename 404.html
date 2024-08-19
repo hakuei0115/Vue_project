@@ -1,10 +1,22 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <meta http-equiv="refresh" content="0; url=/Vue_project/">
+  <meta charset="UTF-8">
+  <title>Redirecting...</title>
   <script>
-    var path = window.location.pathname.replace('/Vue_project', '');
-    window.location.replace('/Vue_project' + path + window.location.search);
+    (function() {
+      var path = window.location.pathname;
+      var projectRoot = '/Vue_project/';
+
+      // 如果路徑不是從 /Vue_project 開始，則重定向到首頁
+      if (!path.startsWith(projectRoot)) {
+        window.location.replace(projectRoot);
+      } else {
+        // 在 Vue_project 中的路徑，重定向到對應的 Vue 路由
+        var newUrl = window.location.origin + projectRoot + path.slice(projectRoot.length) + window.location.search;
+        window.location.replace(newUrl);
+      }
+    })();
   </script>
 </head>
 <body>
