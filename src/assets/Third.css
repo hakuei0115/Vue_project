@@ -11,17 +11,21 @@ main {
     padding: 0;
 }
 
+.div_choose {
+    display: flex;
+    flex-direction: column;
+}
+
 .ul_commodityList li {
     display: flex;
     justify-content: space-between;
     border: 1px solid #ccc;
     border-radius: 5px;
     padding: 10px;
-    cursor: pointer;
 }
 
-.ul_commodityList li:hover {
-    background-color: #f0f0f0;
+.div_commodityDescription {
+    width: 35%;
 }
 
 .div_commodityDescription h2 {
@@ -34,11 +38,42 @@ main {
 .div_commodityDescription p {
     font-size: 1rem;
     font-weight: 400;
+    text-align: left;
+}
+
+.ul_commodityList button {
+    width: 100px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    padding: 5px 10px;
+    font-size: 1rem;
+    cursor: pointer;
+}
+
+.ul_commodityList button:hover {
+    background-color: #0056b3;
 }
 
 .div_selectList {
     flex: 2;
     margin-left: 20px;
+}
+
+.p_selectNone,
+.p_orderNone {
+    width: 400px;
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: antiquewhite;
+    color: #333;
+    border-radius: 5px;
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin: 0 auto;
 }
 
 .table_selectList {
@@ -93,6 +128,11 @@ main {
     cursor: pointer;
     float: right;
     margin-top: 10px;
+}
+
+.p_orderNone {
+    background-color: #007bff;
+    color: #fff;
 }
 
 .material-symbols-outlined {
