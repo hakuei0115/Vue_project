@@ -7,7 +7,7 @@
 </template>
 
 <script setup>
-    import SecondTodolist from './SecondTodolist.vue';
+    import SecondTodolist from '../components/SecondTodolist.vue';
     import Swal from 'sweetalert2';
 
     const token =  sessionStorage.getItem('token');

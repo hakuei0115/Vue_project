@@ -1,0 +1,101 @@
+main {
+    display: flex;
+    justify-content: center;
+    align-items: start;
+    padding: 20px;
+}
+
+.ul_commodityList {
+    flex: 1;
+    list-style-type: none;
+    padding: 0;
+}
+
+.ul_commodityList li {
+    display: flex;
+    justify-content: space-between;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 10px;
+    cursor: pointer;
+}
+
+.ul_commodityList li:hover {
+    background-color: #f0f0f0;
+}
+
+.div_commodityDescription h2 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: 5px;
+    text-align: left;
+}
+
+.div_commodityDescription p {
+    font-size: 1rem;
+    font-weight: 400;
+}
+
+.div_selectList {
+    flex: 2;
+    margin-left: 20px;
+}
+
+.table_selectList {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.table_selectList th {
+    background-color: #f0f0f0;
+    border: 1px solid #ccc;
+    padding: 10px;
+    text-align: center;
+}
+
+.table_selectList td {
+    border: 1px solid #ccc;
+    padding: 10px;
+    text-align: center;
+}
+
+.table_selectList td input[type="number"] {
+    width: 50%;
+    border: none;
+    background-color: transparent;
+    outline: none;
+    text-align: center;
+}
+
+.totalPrice {
+    font-size: 1.5rem;
+    font-weight: 700;
+    text-align: right;
+    margin: 20px;
+}
+
+.remark textarea {
+    width: 100%;
+    height: 100px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 10px;
+    resize: none;
+}
+
+.button_submit {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    font-size: 1rem;
+    cursor: pointer;
+    float: right;
+    margin-top: 10px;
+}
+
+.material-symbols-outlined {
+    font-size: 1rem;
+    cursor: pointer;
+}
