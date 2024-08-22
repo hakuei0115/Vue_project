@@ -1,104 +1,32 @@
 <template>
     <main>
-        <ul class="ul_commodityList">
-            <li v-for="commodity in commodityList" :key="commodity.id">
-                <div class="div_commodityDescription">
-                    <h2>{{ commodity.name }}</h2>
-                    <p>{{ commodity.description }}</p>
-                </div>
-                <div class="div_choose">
-                    <div>
-                        <label>甜度:</label>
-                        <select v-model="commodity.sweetness">
-                            <option v-for="sweet in sweetness" :value="sweet">{{ sweet }}</option>
-                        </select>
-                    </div>
-
-                    <div>
-                        <label>冰塊:</label>
-                        <select v-model="commodity.ice">
-                            <option v-for="ice in iceList" :value="ice">{{ ice }}</option>
-                        </select>
-                    </div>
-                </div>
-                <p>價格: {{ commodity.price }} 元</p>
-                <button type="button" @click="addCommodity(commodity)">加入購物車</button>
-            </li>
-        </ul>
-        <div class="div_selectList">
-            <p class="p_selectNone" v-if="selectedCommodity.length === 0">請選擇商品</p>
-            <div v-else>
-                <table class="table_selectList">
-                    <thead>
-                        <tr>
-                            <th>操作</th>
-                            <th>品項</th>
-                            <th>描述</th>
-                            <th>甜度</th>
-                            <th>冰塊</th>
-                            <th>數量</th>
-                            <th>價格</th>
-                            <th>小計</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr v-for="item in selectedCommodity" :key="item.id">
-                            <td><span class="material-symbols-outlined" @click="deleteCommodity(item.id)">close</span></td>
-                            <td>{{ item.name }}</td>
-                            <td>{{ item.description }}</td>
-                            <td>{{ item.sweetness }}</td>
-                            <td>{{ item.ice }}</td>
-                            <td>
-                                <button @click="item.count -= 1" :disabled="item.count === 1">-</button>
-                                {{ item.count }}
-                                <button @click="item.count += 1">+</button>
-                            </td>
-                            <td>{{ item.price }}</td>
-                            <td>{{ item.price * item.count }}</td>
-                        </tr>
-                    </tbody>
-                </table>
-                <p class="totalPrice">總價: {{ totalPrice }}</p>
-                <div class="remark">
-                    <textarea v-model="remark" value="備註"></textarea>
-                </div>
-                <button type="button" @click="addToCar()" class="button_submit">送出</button>
-            </div>
-        </div>
+        <CommodityItem
+            :commodityList="commodityList"
+            :sweetnessList="sweetnessList"
+            :iceList="iceList"
+            @add-to-cart="handleAddToCart"
+        ></CommodityItem>
+        <p class="p_selectNone" v-if="selectedCommodity.length === 0">請選擇商品</p>
+        <CartList
+            v-else
+            :selectedCommodity="selectedCommodity"
+            @delete-commodity="handleDeleteCommodity"
+            @add-to-order="handleAddToOrder"
+        ></CartList>
     </main>
     <p class="p_orderNone" v-if="orderList.length === 0">尚未建立訂單</p>
-    <div class="div_orderList" v-else>
-        <table class="table table-striped">
-            <thead>
-                <tr>
-                    <th>訂單編號</th>
-                    <th>品項</th>
-                    <th>總價</th>
-                    <th>備註</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr v-for="(order, index) in orderList" :key="index">
-                    <td>{{ index + 1 }}</td>
-                    <td>
-                        <ul>
-                            <li v-for="item in order.commodity" :key="item.id">
-                                {{ item.name }} x {{ item.count }} - {{ item.sweetness }} - {{ item.ice }}
-                            </li>
-                        </ul>
-                    </td>
-                    <td>{{ order.totalPrice }}</td>
-                    <td>{{ order.remark }}</td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
+    <OrderList
+        v-else
+        :orderList="orderList"
+    ></OrderList>
 </template>
 
 <script setup>
-    import { ref, computed } from 'vue'
+    import { ref } from 'vue'
+    import CommodityItem from '@/components/CommodityItem.vue'
+    import CartList from '@/components/CartList.vue';
+    import OrderList from '@/components/OrderList.vue';
 
-    const remark = ref('')
     const selectedCommodity = ref([]);
     const orderList = ref([]);
 
@@ -153,7 +81,7 @@
         }
     ]);
 
-    const sweetness = ref([
+    const sweetnessList = ref([
         '正常甜',
         '少糖',
         '半糖',
@@ -170,50 +98,36 @@
         '熱飲'
     ]);
 
-    const addCommodity = (commodity) => {
-        // if (commodity.sweetness === undefined || commodity.ice === undefined) {
-        //     alert('請選擇甜度與冰塊');
-        //     return;
-        // }
-        
-        const existingItem = selectedCommodity.value.find((item) => item.id === commodity.id && item.sweetness === commodity.sweetness && item.ice === commodity.ice);
-        if (existingItem) {
-            existingItem.count += 1;
-        } else {
-            selectedCommodity.value.push({
-                id: commodity.id,
-                name: commodity.name,
-                description: commodity.description,
-                sweetness: commodity.sweetness,
-                ice: commodity.ice,
-                price: commodity.price,
-                count: 1
-            });
+    const handleAddToCart = (commodity) => {
+        if (commodity.sweetness === undefined || commodity.ice === undefined) {
+            alert('請選擇甜度與冰塊');
+            return;
         }
-    }
 
-    const deleteCommodity = (id) => {
+        const existingItem = selectedCommodity.value.find((item) => {
+            return item.id === commodity.id && item.sweetness === commodity.sweetness && item.ice === commodity.ice;
+        });
+
+        if (existingItem) {
+            existingItem.count++;
+        } else {
+            selectedCommodity.value.push({ ...commodity, count: 1});
+            console.log(selectedCommodity.value);
+        }
+    };
+
+    const handleAddToOrder = (order) => {
+        orderList.value.push(order);
+        selectedCommodity.value = [];
+    };
+
+    const handleDeleteCommodity = (id) => {
         const index = selectedCommodity.value.findIndex((item) => item.id === id);
         selectedCommodity.value.splice(index, 1);
-    }
-
-    const totalPrice = computed(() => {
-        return selectedCommodity.value.reduce((acc, item) => acc + item.price * item.count, 0);
-    });
-
-    const addToCar = () => {
-        orderList.value.push({
-            commodity: selectedCommodity.value,
-            totalPrice: totalPrice.value,
-            remark: remark.value
-        });
-        selectedCommodity.value = [];
-        remark.value = '';
-    }
+    };
 </script>
 
-
-<style scoped>
+<style>
     @import url("https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0");
     @import "@/assets/Third.css";
 </style>
