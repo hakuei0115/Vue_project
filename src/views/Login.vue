@@ -53,7 +53,7 @@ const checkLogin = () => {
           timer: 1500
         })
         .then(() => {
-          router.push('/second');
+          router.push('/third');
         });
       } else {
         if (res.message === '用戶不存在') {
